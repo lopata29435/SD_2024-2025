@@ -34,24 +34,30 @@ public class ZooService {
         return zooRepository.getAnimals().size();
     }
 
-    public List<Animal> getAnimalsForContactZoo() {
+    public List<List<String>> getAnimalsForContactZoo() {
         return zooRepository.getAnimals().stream()
-                .filter(animal -> animal instanceof Herbo)
-                .filter(animal -> ((Herbo) animal).canInteractWithVisitors())
-                .collect(Collectors.toList());
+            .filter(animal -> animal instanceof Herbo)
+            .filter(animal -> ((Herbo) animal).canInteractWithVisitors())
+            .map(animal -> List.of(
+                    animal.getClass().getSimpleName(),
+                    String.valueOf(animal.getFood()),
+                    String.valueOf(animal.getNumber()),
+                    String.valueOf(animal instanceof Herbo ? ((Herbo) animal).getKindnessLevel() : "-")
+            ))
+            .collect(Collectors.toList());
     }
 
-    public List<String> getZooInventory() {
-        List<String> inventory = new ArrayList<>();
-
+    public List<List<String>> getZooInventory() {
+        List<List<String>> inventory = new ArrayList<>();
+    
         for (Animal animal : zooRepository.getAnimals()) {
-            inventory.add("Animal: " + animal.getClass().getSimpleName() + ", Inventory Number: " + animal.getNumber());
+            inventory.add(List.of("Animal: " + animal.getClass().getSimpleName(), String.valueOf(animal.getNumber())));
         }
-
+    
         for (Thing thing : zooRepository.getThings()) {
-            inventory.add("Thing: " + thing.getClass().getSimpleName() + ", Inventory Number: " + thing.getNumber());
+            inventory.add(List.of("Thing: " + thing.getClass().getSimpleName(), String.valueOf(thing.getNumber())));
         }
-
+    
         return inventory;
     }
 }

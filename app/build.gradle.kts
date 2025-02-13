@@ -12,9 +12,11 @@ dependencies {
     implementation("org.springframework:spring-context:6.1.2")
     implementation("org.springframework:spring-core:6.1.2")
 
+    testImplementation("org.mockito:mockito-core:5.6.0")
+    testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-    testImplementation("org.springframework:spring-test:6.1.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
 }
 
 java {
